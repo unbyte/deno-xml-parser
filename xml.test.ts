@@ -17,7 +17,7 @@ Deno.test('get child', () => {
   const s =
     root.getChild('rss')?.getChild('channel')?.getChild('item')?.getChild(
       'title',
-    )?.getValue<string>() ||
+    )?.getValue<string>('') ||
     ''
   assert(s === 'Reinstating net neutrality in the US')
 })

@@ -3,7 +3,7 @@
 ## Usage
 
 ```typescript
-import { Parser } from 'https://deno.land/x/xmlparser@v0.1.2/mod.ts'
+import { Parser, unescapeEntity } from 'https://deno.land/x/xmlparser@v0.2.0/mod.ts'
 
 const xml = Deno.readTextFileSync('/path/to/some.xml')
 
@@ -17,10 +17,13 @@ root.find(['parent-tag', 'child-tag'])
   .forEach(node => console.log(node.toString()))
 
 // get one child by tag name (the first one of this tag name)
-root.getChild('tag')?.getValue<string>()
+root.getChild('tag')?.getValue('')
 
 // get one child by index
-root.getChild(0)?.getValue<number>()
+root.getChild(0)?.getValue(0)
+
+// unescape html entities in strings
+unescapeEntity(root.getChild('content')?.getValue('') || '')
 ```
 
 ## Options
@@ -31,17 +34,17 @@ export interface Options {
   ignoreTags: false | string[]
   // skip parsing some attributes, default to false (true means skip all attributes)
   ignoreAttrs: boolean | string[]
-  // skip namespace in tag names and attributes
+  // skip namespace in tag names and attributes, default to true
   ignoreNamespace: boolean
 
-  // parse node value to string | number | boolean
+  // parse node value to string | number | boolean, default to true
   reflectValues: boolean
-  // parse node attributes to string | number | boolean
+  // parse node attributes to string | number | boolean, default to true
   reflectAttrs: boolean
 
-  // trim string values of tags
+  // trim string values of tags, default to true
   trimValues: boolean
-  // trim string values of attributes
+  // trim string values of attributes, default to true
   trimAttrs: boolean
 }
 ```
