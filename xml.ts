@@ -7,7 +7,7 @@ export type NodeAttr = Record<string, ReflectedTypes>
 
 export class Node {
   constructor(
-    public tag: string,
+    public readonly tag: string,
     public value?: ReflectedTypes,
     public parent: Node | null = null,
     public attr: NodeAttr = {},
@@ -25,6 +25,19 @@ export class Node {
 
   getAttr(key: string): ReflectedTypes | undefined {
     return this.attr[key]
+  }
+
+  getValue<T extends ReflectedTypes>(): T {
+    return this.value as T
+  }
+
+  getChild(idx: number): Node | null
+  getChild(tag: string): Node | null
+  getChild(arg: string | number): Node | null {
+    if (typeof arg === 'string') {
+      return this.children.find(n => n.tag === arg) || null
+    }
+    return this.children[arg] || null
   }
 
   getChildren(tag: string) {

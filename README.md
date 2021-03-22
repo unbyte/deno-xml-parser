@@ -3,7 +3,7 @@
 ## Usage
 
 ```typescript
-import { Parser } from 'https://deno.land/x/xmlparser@v0.1.1/mod.ts'
+import { Parser } from 'https://deno.land/x/xmlparser@v0.1.2/mod.ts'
 
 const xml = Deno.readTextFileSync('/path/to/some.xml')
 
@@ -12,8 +12,15 @@ const parser = new Parser({
 })
 const root = parser.parse(xml)
 
+// get children by route (only support finding by tag name)
 root.find(['parent-tag', 'child-tag'])
   .forEach(node => console.log(node.toString()))
+
+// get one child by tag name (the first one of this tag name)
+root.getChild('tag')?.getValue<string>()
+
+// get one child by index
+root.getChild(0)?.getValue<number>()
 ```
 
 ## Options

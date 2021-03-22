@@ -10,12 +10,11 @@ Deno.test('benchmark', async () => {
   console.timeEnd('parse for 1,000 times')
 })
 
-Deno.test('find children', async () => {
+Deno.test('parse', async () => {
   const xml = Deno.readTextFileSync('./testdata/mozilla.feed.xml')
 
   const parser = new Parser({})
-  const root = parser.parse(xml)
-  assert(root.find(['rss', 'channel', 'item', 'title']).length === 10)
+  parser.parse(xml)
 })
 
 Deno.test('ignore tags', async () => {
