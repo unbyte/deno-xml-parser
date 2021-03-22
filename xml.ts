@@ -27,8 +27,8 @@ export class Node {
     return this.attr[key]
   }
 
-  getValue<T extends ReflectedTypes>(): T {
-    return this.value as T
+  getValue<T extends ReflectedTypes>(defaultValue: T): T {
+    return this.value as T || defaultValue
   }
 
   getChild(idx: number): Node | null
