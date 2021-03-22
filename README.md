@@ -3,11 +3,13 @@
 ## Usage
 
 ```typescript
-import { Parser, Node } from 'https://deno.land/x/xmlparser@v0.0.0/mod.ts'
+import { Parser } from 'https://deno.land/x/xmlparser@v0.1.1/mod.ts'
 
 const xml = Deno.readTextFileSync('/path/to/some.xml')
 
-const parser = new Parser({})
+const parser = new Parser({
+  // options
+})
 const root = parser.parse(xml)
 
 root.find(['parent-tag', 'child-tag'])
